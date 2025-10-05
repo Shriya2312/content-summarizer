@@ -31,7 +31,8 @@ const handleSummarize = async () => {
 - Do not use "*" or numbering.
 - Each bullet should be on a new line.
 - For very short content (less than 3 sentences), summarize concisely without adding unnecessary text.
-- Keep bullet points simple and easy to read.`,
+- Keep bullet points simple and easy to read.
+- Keep the summary short and to the point.`,
   prompt: `Summarize the following content in bullet points:\n\n${content}`,
 });
 
