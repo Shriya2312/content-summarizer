@@ -15,29 +15,31 @@ function App() {
     apiKey: import.meta.env.VITE_GROQ_API_KEY,
   });
 
-  const handleSummarize = async () => {
-    if (!content.trim()) return;
+const handleSummarize = async () => {
+  if (!content.trim()) return;
 
-    setIsLoading(true);
-    setError(null);
-    setSummary('');
+  setIsLoading(true);
+  setError(null);
+  setSummary('');
 
-    try {
-      const result = await generateText({
-        model: groq('llama-3.3-70b-versatile'),
-        system: 'You are a professional content summarizer. ' +
-                'You create clear, concise summaries that capture the key points. ' +
-                'Keep summaries between 3-5 sentences.',
-        prompt: `Summarize the following content:\n\n${content}`,
-      });
+  try {
+    const result = await generateText({
+      model: groq('llama-3.3-70b-versatile'),
+      system: `You are a professional content summarizer. 
+- Summarize the content in clear bullet points. 
+- For very short content (less than 3 sentences), summarize concisely without adding unnecessary sentences. 
+- Keep each bullet point simple, easy to read, and capturing key points only.`,
+      prompt: `Summarize the following content in bullet points:\n\n${content}`,
+    });
 
-      setSummary(result.text);
-    } catch (err) {
-      setError(err.message || 'Failed to generate summary');
-    } finally {
-      setIsLoading(false);
-    }
-  };
+    setSummary(result.text);
+  } catch (err) {
+    setError(err.message || 'Failed to generate summary');
+  } finally {
+    setIsLoading(false);
+  }
+};
+
 
   const handleClear = () => {
     setContent('');
